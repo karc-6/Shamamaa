@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14030a">
+<title>Shamama Sis — Transmission</title>
+<meta name="description" content="A signal, decoded for Shamama Sis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="intro" id="intro" role="dialog" aria-label="Opening film">
+  <canvas id="warp" aria-hidden="true"></canvas>
+  <div class="intro__bar intro__bar--t"></div><div class="intro__bar intro__bar--b"></div>
+  <h2 class="intro__title" id="introTitle" aria-hidden="true"><span>Happy Birthday</span><em id="introTitleName">Shamama Sis</em></h2>
+  <div class="intro__hud"><button class="intro__go" id="introGo" type="button">play the transmission</button></div>
+  <p class="intro__sub" id="introLine" aria-live="polite">standing by</p>
+  <div class="intro__prog" aria-hidden="true"><i id="introProg"></i></div>
+  <button class="intro__skip" id="introSkip" type="button">skip</button>
+</div>
+<div class="burst" id="burst" aria-hidden="true"><i></i><i></i></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="mesh" aria-hidden="true"><span></span><span></span><span></span></div>
+<div class="drift" id="drift" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span id="cursorLabel"></span></div>
+<div class="progress" aria-hidden="true"><i id="progressFill"></i></div>
+<div class="dock" role="group" aria-label="Display options">
+  <button class="dock__btn" id="motionToggle" type="button" aria-pressed="false">reduce motion</button>
+  <button class="dock__btn" id="soundToggle" type="button">sound on</button>
+  <button class="dock__btn" id="replayToggle" type="button">replay intro</button>
+</div>
+
+<nav class="site-nav" aria-label="Rooms">
+  <a href="#entrance" class="site-nav__mark" data-go="entrance">S.</a>
+  <ul class="site-nav__list">
+    <li><a href="#entrance" class="site-nav__link is-active" data-go="entrance">Entrance</a></li>
+    <li><a href="#collection" class="site-nav__link" data-go="collection">Collection</a></li>
+    <li><a href="#guestbook" class="site-nav__link" data-go="guestbook">Her Name</a></li>
+    <li><a href="#reveal" class="site-nav__link" data-go="reveal">The Signal</a></li>
+    <li><a href="#wish" class="site-nav__link" data-go="wish">Wish</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section id="entrance" class="entrance">
+    <div class="entrance__inner">
+      <p class="entrance__kicker">incoming transmission</p>
+      <div class="hero-title">
+        <h1 class="entrance__title" id="entranceTitle">Shamama</h1>
+        <div class="entrance__glow" id="entranceGlow" aria-hidden="true">Shamama</div>
+        <p class="entrance__sis" id="entranceSis">Sis</p>
+      </div>
+      <p class="entrance__subtitle">a signal, decoded for her</p>
+      <p class="entrance__message">To more laughter, brighter days, beautiful memories, and all the dreams you chase.</p>
+      <nav class="doors" aria-label="Open a room">
+        <a href="#collection" class="door" data-go="collection" data-cursor="open"><i>II</i><b>The Collection</b><span>photos &amp; videos</span></a>
+        <a href="#guestbook" class="door" data-go="guestbook" data-cursor="open"><i>III</i><b>Her Name</b><span>build it from memories</span></a>
+        <a href="#reveal" class="door" data-go="reveal" data-cursor="open"><i>IV</i><b>The Signal</b><span>hold to decode</span></a>
+        <a href="#wish" class="door" data-go="wish" data-cursor="open"><i>V</i><b>Make a Wish</b><span>blow out the candles</span></a>
+      </nav>
+    </div>
+  </section>
+
+  <section id="collection" class="room" aria-hidden="true" inert>
+    <div class="room__panel" role="dialog" aria-label="The Collection">
+      <button class="room__close" type="button" aria-label="Close this room">&#10005;</button>
+      <div class="room__scroll">
+        <header class="room-head"><span class="eyebrow">Room II</span><h2>The Collection</h2><p id="colSub">Tap a memory to open it. Tap the heart to keep it.</p></header>
+        <div class="col-bar">
+          <div class="seg" role="group" aria-label="Show">
+            <button type="button" data-f="all" aria-pressed="true">all</button>
+            <button type="button" data-f="photo" aria-pressed="false">photos</button>
+            <button type="button" data-f="video" aria-pressed="false">videos</button>
+            <button type="button" data-f="love" aria-pressed="false">&#9829; <span id="loveCount">0</span></button>
+          </div>
+          <div class="seg" role="group" aria-label="Layout">
+            <button type="button" data-v="wall" aria-pressed="true">wall</button>
+            <button type="button" data-v="flow" aria-pressed="false">flow</button>
+          </div>
+          <button type="button" class="pill" id="colShuffle">shuffle</button>
+          <button type="button" class="pill" id="colShow">&#9654; slideshow</button>
+        </div>
+        <div class="wall" id="wall"></div>
+        <div class="flow" id="flow" hidden>
+          <div class="flow__stage" id="flowStage"></div>
+          <div class="flow__ctl"><button type="button" id="flowPrev" aria-label="Previous">&lsaquo;</button><span id="flowCap"></span><button type="button" id="flowNext" aria-label="Next">&rsaquo;</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="guestbook" class="room" aria-hidden="true" inert>
+    <div class="room__panel" role="dialog" aria-label="Her Name">
+      <button class="room__close" type="button" aria-label="Close this room">&#10005;</button>
+      <div class="room__scroll">
+        <header class="room-head"><span class="eyebrow">Room III</span><h2>Her Name</h2><p>Her memories are in orbit. Sweep your hand through to spin them, then drop one into a letter.</p></header>
+        <div class="forge" id="forge">
+          <div class="slots" id="slots"></div>
+          <div class="forge__cards" id="forgeCards"></div>
+          <canvas class="forge__fx" id="forgeFx" aria-hidden="true"></canvas>
+        </div>
+        <div class="forge__foot">
+          <p id="forgeHint" aria-live="polite">Drag a memory into a letter, or tap one to place it.</p>
+          <div class="forge__tools"><button type="button" class="pill" id="forgeAuto">assemble for me</button><button type="button" class="pill" id="forgeReset">reset</button></div>
+          <div class="ticks" id="forgeTicks" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reveal" class="room" aria-hidden="true" inert>
+    <div class="room__panel room__panel--narrow" role="dialog" aria-label="The Signal">
+      <button class="room__close" type="button" aria-label="Close this room">&#10005;</button>
+      <div class="room__scroll center">
+        <header class="room-head"><span class="eyebrow">Room IV</span><h2>The Signal</h2><p>One last transmission. Tune it in, then hold the core to decode.</p></header>
+        <ol class="steps" aria-label="Progress"><li id="step1" class="on">Tune</li><li id="step2">Decode</li></ol>
+        <div class="signal__card">
+          <div class="signal__bar"><span>Incoming signal</span><span class="chip" id="sigChip">searching</span></div>
+          <div class="scope" id="scopeBox"><canvas id="scope" aria-hidden="true"></canvas></div>
+          <div class="signal__row">
+            <label class="tune"><span>frequency</span><input type="range" id="tune" min="0" max="1" step="0.001" value="0.1"></label>
+            <output class="sig-freq" id="sigFreq" for="tune">92.4 MHz</output>
+          </div>
+          <div class="signal__meter"><span>strength</span><div class="bars" id="sigBars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
+        </div>
+        <div class="reactor" id="reactor">
+          <div class="reactor__orbit" id="reactorOrbit"></div>
+          <svg class="reactor__ring" viewBox="0 0 100 100" aria-hidden="true">
+            <defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff3b4e"/><stop offset=".55" stop-color="#c8102e"/><stop offset="1" stop-color="#ff9aa8"/></linearGradient></defs>
+            <circle class="bg" cx="50" cy="50" r="45"/><circle class="fg" id="reactorRingFg" cx="50" cy="50" r="45"/>
+          </svg>
+          <div class="reactor__core" aria-hidden="true"></div>
+          <span class="reactor__pct" id="reactorPct" aria-hidden="true">tune</span>
+          <button class="reactor__btn" id="reactorBtn" type="button" aria-label="Press and hold to decode the signal"></button>
+        </div>
+        <p class="reactor__label" id="reactorLabel" aria-live="polite">hold to decode</p>
+      </div>
+    </div>
+  </section>
+  <section id="wish" class="room" aria-hidden="true" inert>
+    <div class="room__panel room__panel--narrow" role="dialog" aria-label="Make a Wish">
+      <button class="room__close" type="button" aria-label="Close this room">&#10005;</button>
+      <div class="room__scroll center">
+        <header class="room-head"><span class="eyebrow">Room V</span><h2>Make a Wish</h2><p>Close your eyes, then blow the candles out. Tap a flame, press blow, or use your microphone.</p></header>
+        <div class="cake" id="cake"></div>
+        <div class="wish-row">
+          <input id="wishText" type="text" maxlength="80" placeholder="whisper your wish (optional)" aria-label="Your wish">
+          <button type="button" class="pill" id="wishBlow">blow</button>
+          <button type="button" class="pill" id="wishMic">use microphone</button>
+        </div>
+        <p class="wish-note" id="wishNote" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+</main>
+<p class="colophon" id="colophon"></p>
+
+<div class="player" id="player">
+  <button class="player__play" id="playerPlay" type="button" aria-label="Play">
+    <svg viewBox="0 0 24 24" class="icon-play"><path d="M8 5v14l11-7z"/></svg>
+    <svg viewBox="0 0 24 24" class="icon-pause" hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+  </button>
+  <div class="player__body">
+    <p id="playerTitle">a song for you</p>
+    <div class="player__bar" id="playerBar"><i id="playerFill"></i></div>
+  </div>
+  <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <input id="playerVolume" type="range" min="0" max="1" step="0.05" value="0.6" aria-label="Volume">
+  <audio id="bgAudio" preload="none"><source src="audio/birthday-song.mp3" type="audio/mpeg"></audio>
+</div>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&lsaquo;</button>
+  <figure>
+    <button class="lb-close" id="lbClose" aria-label="Close">&#10005;</button>
+    <div class="lb-stage" id="lbStage"><img id="lbImg" src="" alt=""></div>
+    <p class="lb-missing">Add this photo to the images folder to see it here.</p>
+    <div class="lb-prog" aria-hidden="true"><i></i></div>
+    <figcaption>
+      <span id="lbNum"></span> <span id="lbCap"></span>
+      <button type="button" class="lb-tool" id="lbHeart" aria-pressed="false" aria-label="Love this memory">&#9829;</button>
+      <button type="button" class="lb-tool" id="lbShow" aria-pressed="false">&#9654; slideshow</button>
+    </figcaption>
+    <div class="lb-thumbs" id="lbThumbs"></div>
+  </figure>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">&rsaquo;</button>
+</div>
+
+<div class="lightbox" id="videoModal" aria-hidden="true">
+  <figure>
+    <button class="lb-close" id="vmClose" aria-label="Close">✕</button>
+    <video id="vmPlayer" controls playsinline></video>
+    <p class="lb-missing" id="vmMissing">Add this video to the videos folder to play it here.</p>
+    <figcaption id="vmCap"></figcaption>
+  </figure>
+</div>
+
+<div class="overlay" id="overlay" aria-hidden="true">
+  <canvas id="confetti" aria-hidden="true"></canvas>
+  <span class="overlay__kicker">transmission received</span>
+  <h3 id="signalTitle"></h3>
+  <p>You deserve all the beautiful things life has to offer.</p>
+  <small class="hint">move through the light, tap for fireworks</small>
+  <button id="overlayClose" type="button">close transmission</button>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
