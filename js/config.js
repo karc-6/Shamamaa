@@ -13,27 +13,27 @@ window.CONFIG = {
   // Files go in /images and /videos. 17 photo slots: photo1 ... photo17.
   // Photos may be .jpg, .jpeg, .png or .webp, the site finds the right one by itself.
   PHOTOS: [
-    { file: "photo1.jpg", caption: "My favourite human" },
-    { file: "photo2.jpg", caption: "Always silly" },
-    { file: "photo3.jpg", caption: "Golden hour" },
-    { file: "photo4.jpg", caption: "Partner in crime" },
-    { file: "photo5.jpg", caption: "That laugh" },
-    { file: "photo6.jpg", caption: "Core memory" },
-    { file: "photo7.jpg", caption: "Never not smiling" },
-    { file: "photo8.jpg", caption: "Us, again" },
-    { file: "photo9.jpg", caption: "Pure chaos" },
-    { file: "photo10.jpg", caption: "Forever" },
-    { file: "photo11.jpg", caption: "Another favourite" },
-    { file: "photo12.jpg", caption: "Bright days" },
-    { file: "photo13.jpg", caption: "Little moments" },
-    { file: "photo14.jpg", caption: "Always together" },
-    { file: "photo15.jpg", caption: "Laughing again" },
-    { file: "photo16.jpg", caption: "Best memories" },
-    { file: "photo17.jpg", caption: "Still my favourite" }
+    { file: "photo1.jpg", caption: "1" },
+    { file: "photo2.jpg", caption: "2" },
+    { file: "photo3.jpg", caption: "3" },
+    { file: "photo4.jpg", caption: "4" },
+    { file: "photo5.jpg", caption: "5" },
+    { file: "photo6.jpg", caption: "6" },
+    { file: "photo7.jpg", caption: "7" },
+    { file: "photo8.jpg", caption: "8" },
+    { file: "photo9.jpg", caption: "9" },
+    { file: "photo10.jpg", caption: "10" },
+    { file: "photo11.jpg", caption: "11" },
+    { file: "photo12.jpg", caption: "12" },
+    { file: "photo13.jpg", caption: "13" },
+    { file: "photo14.jpg", caption: "14" },
+    { file: "photo15.jpg", caption: "15" },
+    { file: "photo16.jpg", caption: "16" },
+    { file: "photo17.jpg", caption: "17" }
   ],
   VIDEOS: [
-    { file: "video1.mp4", caption: "Moving memory I" },
-    { file: "video2.mp4", caption: "Moving memory II" },
-    { file: "video3.mp4", caption: "Moving memory III" }
+    { file: "video1.mp4", caption: "Edit tho ha I" },
+    { file: "video2.mp4", caption: "Edit tho ha II" },
+    { file: "video3.mp4", caption: "Edit tho ha III" }
   ]
 };
